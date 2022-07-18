@@ -13,14 +13,19 @@ import {
 })
 export class StatsCardComponent implements OnInit {
 
+	
+
   constructor( 
   	private apiService: ApiService,
   	private toastr: ToastrService,
   	) { }
   dashboards: any[]
+  filteredItems: any[]
+  test_values: any[]
+
 
   ngOnInit() {
-  	this.dashboards=[{
+  	 this.test_values=[{
   		url: "https://www.google.com",
   		name:'TEST1',
   		description:'TEST GOOGLE URL-22 chars max'
@@ -58,10 +63,12 @@ export class StatsCardComponent implements OnInit {
   		url: "https://www.youtube.com"
   	}
   	]
+  	this.dashboards = this.test_values
 
   this.apiService.getItems().subscribe((items:any= []) => {
   	console.log(items);
   	if(items.length != 0){
+  		this.test_values=items
   	this.dashboards = items	;
   }
   }, () => {
@@ -94,7 +101,21 @@ export class StatsCardComponent implements OnInit {
  //   this.toastr.error(error.error.error_msg);
  //  });
  // }
+applyFilter(filterValue: string) {
+	var filtered : any = []
+	 console.log(filterValue)
+	 this.dashboards=this.test_values
+		filterValue=filterValue.trim().toLowerCase()
+    this.dashboards.filter( function(item) {
+    	// console.log(item.description.toLowerCase().indexOf(filterValue))
+    	if (item.name.toLowerCase().indexOf(filterValue) >=0 || item.description.toLowerCase().indexOf(filterValue) >=0){
+    		filtered.push(item)
+    	}
+    });
+    // console.log(filtered)
+    this.dashboards=filtered
 
+  }
 
 
 

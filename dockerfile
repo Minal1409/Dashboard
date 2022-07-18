@@ -1,6 +1,6 @@
 # Stage 0, based on Node.js, to build and compile Angular
 FROM node:14.15.5 as node
-WORKDIR /opt/network-automation-dockers/web/
+WORKDIR /opt/network-automation-dockers/dashboard/
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
